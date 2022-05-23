@@ -31,13 +31,13 @@ describe GrammarStats do
     expect(grammar_stats.check("is it raining today")).to eq false
   end
 
-  it "returns the percentage of good sentences that are checked" do
+  it "returns the percentage of good sentences that have been checked" do
     grammar_stats = GrammarStats.new
     grammar_stats.check("It's great")
     grammar_stats.check("it's good")
     grammar_stats.check("It's good.")
     grammar_stats.check("It's bad.")
-    expect(grammar_stats.percentage_good).to eq "50%"
+    expect(grammar_stats.percentage_good).to eq "50.0%"
 end 
 
 it "returns 0% when there are no good sentences in the sentences that have been checked" do
@@ -46,6 +46,6 @@ it "returns 0% when there are no good sentences in the sentences that have been 
   grammar_stats.check("it's good")
   grammar_stats.check("It's okay")
   grammar_stats.check("It's really bad")
-  expect(grammar_stats.percentage_good).to eq "0%"
+  expect(grammar_stats.percentage_good).to eq "0.0%"
 end 
 end 

@@ -30,8 +30,8 @@ class GrammarStats
     # the check defined in the `check` method. The number 55 represents 55%.
     total = @true_total + @false_total
     true_total_only = @true_total
-    percentage = ((true_total_only.to_f / total.to_f) * 100).to_f
-    puts "#{percentage} %"
+    percentage = ((true_total_only.to_f/ total.to_f) * 100).to_f
+    return "#{percentage}%"
   end
 end 
 
