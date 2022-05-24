@@ -49,6 +49,13 @@ describe DiaryEntry do
    end
   end 
 
+  context "given a wpm of (0)" do 
+    it "fails" do 
+      diary_entry = DiaryEntry.new("my title", "one two three")
+      expect { diary_entry.reading_chunk(0, 5) }.to raise_error "Reading speed must be above zero"
+    end 
+  end
+
   context "with a contents unreadle within one time " do 
     it "Returns the full contents" do 
       diary_entry = DiaryEntry.new( "my title", "one two three")
@@ -57,11 +64,27 @@ describe DiaryEntry do
      end
 
     it "returns the next chunk, the next we are asked" do
-     diary_entry = DiaryEntry.new( "my title", "one two three")
-     diary_entry.reading_chunk(2, 1)
-     chunk = diary_entry.reading_chunk(2, 1)
-     expect(chunk).to eq "three"
+      diary_entry = DiaryEntry.new("my title", "one two three")
+      diary_entry.reading_chunk(2, 1)
+      chunk = diary_entry.reading_chunk(2, 1)
+      expect(chunk).to eq "three"
     end
-  end
- end 
-end 
+
+    it "restarts after reading the whole contents" do
+      diary_entry = DiaryEntry.new("my title", "one two three")
+      diary_entry.reading_chunk(2, 1)
+      diary_entry.reading_chunk(2, 1)
+      chunk = diary_entry.reading_chunk(2, 1)
+      expect(chunk).to eq "one two"
+    end
+
+    it "restarts if it finishes exactly on the end of the content" do
+      diary_entry = DiaryEntry.new("my title", "one two three")
+      diary_entry.reading_chunk(2, 1)
+      diary_entry.reading_chunk(1, 1)
+      chunk = diary_entry.reading_chunk(2, 1)
+      expect(chunk).to eq "one two"
+    end
+  end 
+end
+end  
